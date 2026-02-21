@@ -7,37 +7,39 @@
     <style>
         body{
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: aqua;
+            background-color: rgb(255, 0, 0);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            pa
+            
+            
         }
         .countdown-container{
             text-align: center;
         }
         .countdown-timer{
-            font-size: 36px;
+            font-size: 64px;
             font-weight: bold;
             color: black;
             margin-bottom: 20px;
         }
         .countdown-label{
-            font-size: 18px;
+            font-size: 36px;
             color:beige;
         }
     </style>
 </head>
 <body>
     <div class="countdown-container">
+        <div class="countdown-label">Mid Sem</div>
         <div class="countdown-timer" id="countdown"></div>
-        <div class="countdown-label">Until 2026</div>
+        <div class="countdown-label">Until Party</div>
     </div>
 
     <script>
-       const targetDate= new Date('2026-01-01T00:00:00')
+       const targetDate= new Date('2026-02-27T11:30:00')
     function updateCountDown(){
         const currentDate= new Date();
 
