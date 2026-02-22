@@ -3,60 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Count-down</title>
+    <title>Countdown</title>
+
     <style>
-        body{
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: rgb(255, 0, 0);
+            background: linear-gradient(270deg, #ff0000, #ff6a00, #ff0000);
+            background-size: 600% 600%;
+            animation: bgMove 8s ease infinite;
+
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            
-            
+            color: white;
         }
-        .countdown-container{
+
+        @keyframes bgMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .countdown-container {
             text-align: center;
+            padding: 40px 60px;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.4);
+            animation: fadeIn 1.2s ease;
         }
-        .countdown-timer{
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .countdown-label {
+            font-size: 36px;
+            margin: 10px 0;
+            letter-spacing: 2px;
+        }
+
+        .countdown-timer {
             font-size: 64px;
             font-weight: bold;
-            color: black;
-            margin-bottom: 20px;
+            margin: 25px 0;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255,255,255,0.6);
+            animation: pulse 1.5s infinite;
         }
-        .countdown-label{
-            font-size: 36px;
-            color:beige;
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .shake {
+            animation: shake 0.3s;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            50% { transform: translateX(4px); }
+            75% { transform: translateX(-4px); }
+            100% { transform: translateX(0); }
+        }
+
+        .party {
+            font-size: 48px;
+            color: #00ffcc;
+            text-shadow: 0 0 30px #00ffcc;
+            animation: pulse 1s infinite;
         }
     </style>
 </head>
 <body>
+
     <div class="countdown-container">
         <div class="countdown-label">Mid Sem</div>
         <div class="countdown-timer" id="countdown"></div>
-        <div class="countdown-label">Until Party</div>
+        <div class="countdown-label">Until Party 🎉</div>
     </div>
 
     <script>
-       const targetDate= new Date('2026-02-27T11:30:00')
-    function updateCountDown(){
-        const currentDate= new Date();
+        const targetDate = new Date('2026-02-27T11:30:00');
+        const countdownEl = document.getElementById('countdown');
 
-        const timeDiff= targetDate-currentDate;
-//milisecond--- convert
-        const days= Math.floor(timeDiff/(1000*60*60*24));
-        const hours= Math.floor((timeDiff) %(1000*60*60*24)/(1000*60*60));
-        const minutes= Math.floor((timeDiff) %(1000*60*60)/(1000*60));
-        const seconds= Math.floor((timeDiff) %(1000*60)/1000);
-        
-        document.getElementById('countdown').innerHTML=`${days}d ${hours}h ${minutes}m ${seconds}s`
+        function updateCountDown() {
+            const currentDate = new Date();
+            const timeDiff = targetDate - currentDate;
 
-        setTimeout(updateCountDown,1000)
-    }
-    updateCountDown()
-    
+            if (timeDiff <= 0) {
+                countdownEl.innerHTML = "PARTY TIME 🥳🔥";
+                countdownEl.classList.add("party");
+                return;
+            }
 
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+            countdownEl.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            countdownEl.classList.add("shake");
+            setTimeout(() => countdownEl.classList.remove("shake"), 300);
+
+            setTimeout(updateCountDown, 1000);
+        }
+
+        updateCountDown();
     </script>
+
 </body>
 </html>
